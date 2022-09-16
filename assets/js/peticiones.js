@@ -72,9 +72,9 @@ const search = () => {
     loadApi(API_SEARCH_URL + `&q="${word}"`);
     setStorage(word);
     loadRecientes();
-    // input.value = "";
     observer.unobserve(document.querySelector(".more"));
     observer = initInfiniteScrollSearch(word);
+    input.value = "";
 }
 
 const searchHistory = (word) => {
