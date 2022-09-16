@@ -35,3 +35,7 @@ div.card {
 .emptyRecientesErr {
   display: none;
 }
+
+.results {
+  min-height: 100vh;
+}

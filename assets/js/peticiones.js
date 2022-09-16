@@ -1,14 +1,16 @@
 // En constantes por convección uso mayúsculas y no CamelCase
 // Fuente: https://es.wikipedia.org/wiki/Convenci%C3%B3n_de_nombres_(programaci%C3%B3n)
 
-const CANT_REGISTROS = 20;
+const CANT_REGISTROS = 4;
 const URI = `https://api.giphy.com/v1/gifs`;
 const API_KEY = "8f8g82LMwlCzZ6O4sQDkHcW7O7WalHAx";
-const API_TREND_URL  = `${URI}/trending?api_key=${API_KEY}&limit=${CANT_REGISTROS}&offset=0`;         // BÚSQUEDAS TRENDING
-const API_SEARCH_URL = `${URI}/search?api_key=${API_KEY}&limit=${CANT_REGISTROS}&offset=0`;           // BÚSQUEDAS PERSONALIZADAS
+const API_TREND_URL  = `${URI}/trending?api_key=${API_KEY}&limit=${CANT_REGISTROS}`;         // BÚSQUEDAS TRENDING
+const API_SEARCH_URL = `${URI}/search?api_key=${API_KEY}&limit=${CANT_REGISTROS}`;           // BÚSQUEDAS PERSONALIZADAS
 
-let offset = 0;
+let offsetTrend = 0;
+let offsetSearch = 0;
 let listadoRecientes = [];
+let observer;
 
 const getStorage = () => {
     const elemRecientes = localStorage.getItem('elemRecientes');
@@ -70,7 +72,9 @@ const search = () => {
     loadApi(API_SEARCH_URL + `&q="${word}"`);
     setStorage(word);
     loadRecientes();
-    input.value = "";
+    // input.value = "";
+    observer.unobserve(document.querySelector(".more"));
+    observer = initInfiniteScrollSearch(word);
 }
 
 const searchHistory = (word) => {
@@ -78,8 +82,13 @@ const searchHistory = (word) => {
     loadApi(API_SEARCH_URL + `&q="${word}"`);
 }
 
-const searchInfiniteScroll = () => {
-
+const trendInfiniteScroll = () => {
+    offsetTrend += CANT_REGISTROS;
+    loadApi(API_TREND_URL + `&offset=${offsetTrend}`);
+}
+const searchInfiniteScroll = (word) => {
+    offsetSearch += CANT_REGISTROS;
+    loadApi(API_SEARCH_URL + `&q="${word}"&offset=${offsetSearch}`);
 }
 
 const clearGifs = () => {
@@ -172,6 +181,26 @@ const toastWarnMsg = (msg) => {
     }).showToast();
 }
 
+const initInfiniteScrollTrend = () => {
+    const intersectionObserver = new IntersectionObserver(entries => {
+        if (entries[0].intersectionRatio <= 0) return;
+        trendInfiniteScroll();
+    });
+    intersectionObserver.observe(document.querySelector(".more"));
+    return intersectionObserver;
+}
+
+const initInfiniteScrollSearch = (word) => {
+    observer.unobserve(document.querySelector(".more"));
+    const intersectionObserver = new IntersectionObserver(entries => {
+        if (entries[0].intersectionRatio <= 0) return;
+        searchInfiniteScroll(word);
+    });
+    intersectionObserver.observe(document.querySelector(".more"));
+    return intersectionObserver;
+}
+
 initApp();
 loadApi(API_TREND_URL);
 loadRecientes();
+observer = initInfiniteScrollTrend();
