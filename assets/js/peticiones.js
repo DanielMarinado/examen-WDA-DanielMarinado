@@ -69,7 +69,7 @@ const search = () => {
     if( validateForm() === false ) return;
 
     clearGifs();
-    loadApi(API_SEARCH_URL + `&q="${word}"`);
+    cantResult = loadApi(API_SEARCH_URL + `&q="${word}"`);
     setStorage(word);
     loadRecientes();
     observer.unobserve(document.querySelector(".more"));
@@ -96,9 +96,15 @@ const clearGifs = () => {
 }
 
 const loadApi = async (url) => {
+    const wrapperEmptyCards = document.querySelector('#emptyCards');
     const gifs = await getGif(url);
 
-    if(gifs.data.length===0) toastWarnMsg(`No se han encontrado resultados.`)
+    if(gifs.data.length===0){
+        wrapperEmptyCards.style.display = "block";
+        toastWarnMsg(`No se han encontrado resultados.`);
+    }else {
+        wrapperEmptyCards.style.display = "none";
+    }
 
     for (let gif of gifs.data)
         printCard(gif);
