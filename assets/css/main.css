@@ -80,7 +80,9 @@ main {
   border-bottom: 2px solid rgba(34,165,207,0.8);
   background-color: transparent;
   outline: 0;
+  transition: outline 100ms ease-in-out;
 }
+
 #frmSearch input[type="text"]:focus{
   color: rgba(34,165,207,0.8);
   outline: 4px dashed rgba(34,165,207,1);
@@ -96,11 +98,16 @@ main {
   border: none;
   border-radius: 8px;
   color: white;
-  background-color: rgba(34,165,207,1);
+  background-color: rgba(34,165,207,0.2);
   padding: 20px;
   display: flex;
   min-width: 200px;
+  transition: all 100ms ease-in-out;
+}
 
+.search-box button:hover {
+  background-color: rgba(34,165,207,1);
+  transform: scale(1.02, 1.02);
 }
 
 #contenedorRecientes {
@@ -123,12 +130,13 @@ a:visited {
   padding: 0 2px;
   margin: 1px;
   border-radius: 3px;
-  color:  rgba(34,165,207,1);
+  color:  rgba(34,165,207,0.6);
   text-decoration: none;
   cursor: pointer;
 }
 a:hover {
-  color: red;
+  color:  rgba(34,165,207,1);
+  transition: all 300ms ease-in-out;
 }
 
 .emptyRecientesErr {
@@ -149,6 +157,14 @@ div.card {
   border-radius: 6px;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
   background: rgba(34,165,207,0.1);
+  transition: all 300ms ease-in-out;
+}
+
+div.card:nth-child(odd):hover {
+  transform: scale(1.05, 1.05);
+}
+div.card:nth-child(even):hover {
+  transform: scale(1.05, 1.05);
 }
 
 .card img {
@@ -169,6 +185,49 @@ div.card {
   align-items: flex-end;
   overflow: hidden;
   background-color: rgba(34,165,207,0.7);
+}
+
+ul li.wrapperReciente{
+  transition: all 100ms ease-in-out;
+}
+
+ul li.wrapperReciente:nth-child(odd):hover{
+  transform: scale(1.4, 1.4) rotate(-5deg);
+  background-color: white;
+}
+ul li.wrapperReciente:nth-child(even):hover{
+  transform: scale(1.4, 1.4) rotate(5deg);
+  background-color: white;
+}
+
+
+
+#scrollInit {
+  display: flex;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 100px;
+  background-color: rgba(34,165,207,0.2);
+  width: 60px;
+  height: 60px;
+  transition: all 300ms ease-in-out;
+}
+
+#scrollInit:hover {
+  background-color: rgba(34,165,207,1);
+}
+
+#scrollInit figure  {
+  display: flex;
+  flex:1;
+  justify-content: center;
+  align-items: center;
+}
+#scrollInit figure img{
+  width: 60px;
+  height: 40px;
+  filter: invert(100%);
 }
 
 @media (min-width: 600px) {
@@ -198,11 +257,10 @@ div.card {
   #contenedorSearch {
     position: fixed;
   }
-
+  
   #contenedorRecientes {
     position: fixed;
   }
-
 
 }
 

@@ -1,7 +1,7 @@
 // En constantes por convección uso mayúsculas y no CamelCase
 // Fuente: https://es.wikipedia.org/wiki/Convenci%C3%B3n_de_nombres_(programaci%C3%B3n)
 
-const CANT_REGISTROS = 10;
+const CANT_REGISTROS = 12;
 const URI = `https://api.giphy.com/v1/gifs`;
 const API_KEY = "8f8g82LMwlCzZ6O4sQDkHcW7O7WalHAx";
 const API_TREND_URL  = `${URI}/trending?api_key=${API_KEY}&limit=${CANT_REGISTROS}`;         // BÚSQUEDAS TRENDING
@@ -141,8 +141,10 @@ const printRecents = () => {
 const initApp = () => {
     const formulario = document.querySelector('#frmSearch');
     const button = document.querySelector('#btnBuscar');
+    const scrollInit = document.querySelector('#scrollInit');
     formulario.addEventListener('submit', handleSubmit)
     button.addEventListener('click', search);
+    scrollInit.addEventListener('click', goInit);
 }
 
 const initInfiniteScrollTrend = () => {
@@ -162,6 +164,10 @@ const initInfiniteScrollSearch = (word) => {
     });
     intersectionObserver.observe(document.querySelector(".more"));
     return intersectionObserver;
+}
+
+const goInit = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 initApp();
