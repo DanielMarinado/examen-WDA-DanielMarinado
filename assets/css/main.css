@@ -39,15 +39,14 @@ main {
   margin-top: 100px;
 }
 
-.search-box {
-  /* display: flex;
-  flex-direction: column;
-  flex: 1; */
-  /* background-color: rgba(34,165,207,0.1); */
-  /* align-items: center;
+#emptyCards {
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: rgba(0, 208, 255, 0.1);
+  align-items: center;
   padding: 20px;
-  margin-bottom: 20px; */
-  /* min-width: 300px; */
+  margin-bottom: 20px;
+  min-height: 100vh;
 }
 
 #contenedorSearch {
@@ -147,6 +146,10 @@ a:hover {
   display: grid;
   gap: 20px;
   min-height: 100vh;
+
+  background-color: rgba(34,165,207,0.1);
+  padding: 20px;
+
 }
 
 div.card {
@@ -242,18 +245,24 @@ ul li.wrapperReciente:nth-child(even):hover{
   }
   .search-box {
     display: flex;
-    flex:1;
+    /* flex:1; */
     min-width: 244px;
     order: 0;
   }
   .results{
     order: 2;
   }
-  #wrapperRecientes{
+  #wrapperRecientes {
+    display: flex;
     min-width: 230px;
     order: 3;
   }
 
+  #wrapperResults {
+    display: grid;
+    flex: 1;
+    order: 2;
+  }
   #contenedorSearch {
     position: fixed;
   }
