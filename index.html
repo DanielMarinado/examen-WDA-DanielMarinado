@@ -13,17 +13,20 @@
 
   <body>
     <header>
-      <h1>Exámen WebDevelopment - Daniel Marinado</h1>
+      <h1>Exámen WebDevelopment</h1>
+      <span>Daniel Marinado</span>
     </header>
     <main>
       <section class="search-box">
-        <form id="frmSearch">
-          <label for="">Ingrese su búsqueda</label>
-          <input type="text" id="input" />
-        </form>
+        <div id="contenedorSearch">
+          <form id="frmSearch">
+            <label for="">Ingrese su búsqueda</label>
+            <input type="text" id="input" placeholder="¿Que desea buscar?"/>
+          </form>
         <button class="search-box_form-button" id="btnBuscar">Buscar</button>
+      </div>
       </section>
-      <section>
+      <section id="wrapperRecientes">
         <div id="contenedorRecientes">
           <h3>Búsquedas recientes</h3>
           <div id="emptyRecientesErr">
@@ -39,7 +42,6 @@
         <div class="results">
         </div>
       </section>
-      <br>
       
     </main>
     <div class="more">loading. . .</div>
@@ -47,5 +49,6 @@
     </footer>
 
     <script src="./assets/js/peticiones.js"></script>
+    <script src="./assets/js/toasts.js"></script>
   </body>
 </html>
