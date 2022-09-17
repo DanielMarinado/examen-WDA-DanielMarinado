@@ -98,15 +98,18 @@ const clearGifs = () => {
 const loadApi = async (url) => {
     const wrapperEmptyCards = document.querySelector('#emptyCards');
     const divResults = document.querySelector('.results');
+    const divMore = document.querySelector('.more');
     const gifs = await getGif(url);
 
     if(gifs.data.length===0){
         wrapperEmptyCards.style.display = "block";
         divResults.style.display = "none";
+        divMore.style.display = "none";
         toastWarnMsg(`No se han encontrado resultados.`);
     }else {
         wrapperEmptyCards.style.display = "none";
         divResults.style.display = "grid";
+        divMore.style.display = "block";
     }
 
     for (let gif of gifs.data)
