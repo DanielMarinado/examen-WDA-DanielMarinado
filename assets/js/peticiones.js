@@ -94,18 +94,20 @@ const searchHistory = async (word) => {
     data = await loadApi(API_SEARCH_URL + `&q="${word}"`);
     (data.length > 0 ) && clearGifs();
     setResults(data);
+    observer.unobserve(document.querySelector(".more"));
+    observer = initInfiniteScrollSearch(word);
 }
 
 const trendInfiniteScroll = () => {
     let data;
     offsetTrend += CANT_REGISTROS;
-    data = loadApi(API_TREND_URL + `&offset=${offsetTrend}`);
+    data = loadApi(API_TREND_URL + `&offset=${offsetTrend}`, true);
     setResults(data);
 }
 const searchInfiniteScroll = (word) => {
     let data;
     offsetSearch += CANT_REGISTROS;
-    data = loadApi(API_SEARCH_URL + `&q="${word}"&offset=${offsetSearch}`);
+    data = loadApi(API_SEARCH_URL + `&q="${word}"&offset=${offsetSearch}`, true);
     setResults(data);
 }
 
@@ -113,22 +115,28 @@ const clearGifs = () => {
     document.querySelector(".results").innerHTML = "";
 }
 
-const loadApi = async (url) => {
+const loadApi = async (url, fromScroll) => {
     const wrapperEmptyCards = document.querySelector('#emptyCards');
     const divResults = document.querySelector('.results');
     const divMore = document.querySelector('.more');
     const gifs = await getGif(url);
 
-    if(gifs.data.length===0){
+    if( gifs.data.length===0 && fromScroll===true ) {
+        // Si viene de scroll y no hay resultados, el error es otro:
+        toastWarnMsg(`Se ha llegado al final de los resultados.`);
+        divMore.style.display = "none";
+    } else if(gifs.data.length===0 && fromScroll=='undefined' ){
         divMore.style.display = "none";
         wrapperEmptyCards.style.display = "block";
         divResults.style.display = "none";
         toastWarnMsg(`No se han encontrado resultados.`);
-    }else {
+    } else {
         wrapperEmptyCards.style.display = "none";
         divResults.style.display = "grid";
         divMore.style.display = "block";
     }
+    
+
     return  gifs.data ?  gifs.data : [];
     
 };
