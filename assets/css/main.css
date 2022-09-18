@@ -272,6 +272,10 @@ ul li.wrapperReciente:nth-child(even):hover{
 
 }
 
+.more {
+  text-align: center;
+}
+
 @media (min-width: 750px) {
   .results{
     display: grid;
