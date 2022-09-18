@@ -69,6 +69,7 @@ main {
   border-radius: 8px;
   padding: 4px;
   margin-bottom: 8px;
+  color: rgba(34,165,207,0.8);
 }
 
 #frmSearch input[type="text"]{
@@ -91,11 +92,11 @@ main {
   color: rgba(34,165,207,0.2);
 }
 
-.search-box button {
+.searchBox button {
   justify-content: center;
   border: none;
   border-radius: 8px;
-  color: white;
+  color: rgba(34,165,207,0.8);
   background-color: rgba(34,165,207,0.2);
   padding: 20px;
   display: flex;
@@ -103,8 +104,9 @@ main {
   transition: all 100ms ease-in-out;
 }
 
-.search-box button:hover {
+.searchBox button:hover {
   background-color: rgba(34,165,207,1);
+  color: white;
   transform: scale(1.02, 1.02);
 }
 
@@ -117,6 +119,11 @@ main {
   align-items: center;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+#contenedorRecientes h3 {
+  color: rgba(34,165,207,0.8);
+  margin-bottom: 6px;
 }
 
 #contenedorRecientes ul {
@@ -141,11 +148,22 @@ a:hover {
   display: none;
 }
 
+#wrapperResults{
+  padding: 10px;
+  background-color: rgba(34,165,207,0.1);
+}
+
+#wrapperResults h1 {
+  color: rgba(34,165,207,0.8);
+}
+
+#wrapperResults em {
+  margin-bottom: 10px;
+}
 .results {
   display: grid;
   gap: 20px;
   min-height: 100vh;
-
   background-color: rgba(34,165,207,0.1);
   padding: 20px;
 
@@ -242,7 +260,7 @@ ul li.wrapperReciente:nth-child(even):hover{
     display: flex;
     flex:1;
   }
-  .search-box {
+  .searchBox {
     display: flex;
     /* flex:1; */
     min-width: 244px;

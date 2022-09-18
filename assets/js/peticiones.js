@@ -64,10 +64,15 @@ const getGif = async (url) => {
 
 const search = () => {
     const input = document.querySelector("#input");
+    const looking = document.querySelector("#txtLooking");
+
     const word = input.value;
     let data;
     offsetSearch=0;
     offsetTrend=0;
+
+    looking.innerHTML = `Ud. está viendo: "${word}"`;
+
     if( validateForm() === false ) return;
 
     clearGifs();
@@ -81,6 +86,8 @@ const search = () => {
 }
 
 const searchHistory = async (word) => {
+    const looking = document.querySelector("#txtLooking");
+    looking.innerHTML = `Ud. está viendo: "${word}"`;
     let data;
     offsetSearch=0;
     offsetTrend=0;
