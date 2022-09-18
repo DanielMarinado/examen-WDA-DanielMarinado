@@ -65,11 +65,14 @@ const getGif = async (url) => {
 const search = () => {
     const input = document.querySelector("#input");
     const word = input.value;
-
+    let data;
+    offsetSearch=0;
+    offsetTrend=0;
     if( validateForm() === false ) return;
 
     clearGifs();
-    cantResult = loadApi(API_SEARCH_URL + `&q="${word}"`);
+    data = loadApi(API_SEARCH_URL + `&q="${word}"`);
+    setResults(data);
     setStorage(word);
     loadRecientes();
     observer.unobserve(document.querySelector(".more"));
@@ -77,18 +80,26 @@ const search = () => {
     input.value = "";
 }
 
-const searchHistory = (word) => {
-    clearGifs();
-    loadApi(API_SEARCH_URL + `&q="${word}"`);
+const searchHistory = async (word) => {
+    let data;
+    offsetSearch=0;
+    offsetTrend=0;
+    data = await loadApi(API_SEARCH_URL + `&q="${word}"`);
+    (data.length > 0 ) && clearGifs();
+    setResults(data);
 }
 
 const trendInfiniteScroll = () => {
+    let data;
     offsetTrend += CANT_REGISTROS;
-    loadApi(API_TREND_URL + `&offset=${offsetTrend}`);
+    data = loadApi(API_TREND_URL + `&offset=${offsetTrend}`);
+    setResults(data);
 }
 const searchInfiniteScroll = (word) => {
+    let data;
     offsetSearch += CANT_REGISTROS;
-    loadApi(API_SEARCH_URL + `&q="${word}"&offset=${offsetSearch}`);
+    data = loadApi(API_SEARCH_URL + `&q="${word}"&offset=${offsetSearch}`);
+    setResults(data);
 }
 
 const clearGifs = () => {
@@ -102,19 +113,24 @@ const loadApi = async (url) => {
     const gifs = await getGif(url);
 
     if(gifs.data.length===0){
+        divMore.style.display = "none";
         wrapperEmptyCards.style.display = "block";
         divResults.style.display = "none";
-        divMore.style.display = "none";
         toastWarnMsg(`No se han encontrado resultados.`);
     }else {
         wrapperEmptyCards.style.display = "none";
         divResults.style.display = "grid";
         divMore.style.display = "block";
     }
-
-    for (let gif of gifs.data)
-        printCard(gif);
+    return  gifs.data ?  gifs.data : [];
+    
 };
+
+const setResults = async (data) => {
+    let datos = await data;
+    for (let gif of datos)
+        printCard(gif);
+}
 
 const loadRecientes = () => {
     listadoRecientes = getStorage() ? getStorage() : [];
@@ -177,6 +193,6 @@ const goInit = () => {
 }
 
 initApp();
-loadApi(API_TREND_URL);
+setResults(loadApi(API_TREND_URL));
 loadRecientes();
 observer = initInfiniteScrollTrend();
