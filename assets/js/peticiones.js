@@ -47,10 +47,10 @@ const printCard = (gif) => {
     wrapper.className = "card";
     const content = document.createElement("p");
     content.className = "tituloCard";
-    content.innerText = gif.title || "Sín título";
+    content.innerText = gif.title.trim() || "Sín título";
     const wrapperImg = document.createElement("img");
     wrapperImg.src = gif.images.original.webp;
-    wrapperImg.alt = gif.title || "Sín título";
+    wrapperImg.alt = gif.title.trim() || "Sín título";
 
 
     wrapper.appendChild(wrapperImg);
